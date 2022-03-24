@@ -3,28 +3,44 @@ const router = express.Router()
 const userController = require(`../controllers/userControllers`)
 const auth = require(`../middlewares/auth`)
 
+const { verify, verifyIfAdmin, decode } = auth
+const { 
+    getAllUsers, 
+    getAllAdmins, 
+    findUser, 
+    signUp, 
+    checkEmail, 
+    login, 
+    profile, 
+    update, 
+    updatePassword, 
+    adminTrue, 
+    adminFalse, 
+    deleteUser
+} = userController
+
 //GET ALL USERS - received and return all users info or error
-router.get(`/`, auth.verifyIfAdmin, async (req, res) => {
+router.get(`/`, verifyIfAdmin, async (req, res) => {
     try {
-        await userController.getAllUsers().then(result => res.send(result))
+        await getAllUsers().then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
 })
 
 //GET ALL ADMIN
-router.get(`/admins`, auth.verifyIfAdmin, async (req, res) => {
+router.get(`/admins`, verifyIfAdmin, async (req, res) => {
     try {
-        await userController.getAllAdmins().then(result => res.send(result))
+        await getAllAdmins().then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
 })
 
 //FIND USER BY ID
-router.get(`/:userId`, auth.verify, async (req, res) => {
+router.get(`/:userId`, verify, async (req, res) => {
     try {
-        await userController.findUser(req.params.userId).then(result => res.send(result))
+        await findUser(req.params.userId).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
@@ -33,7 +49,7 @@ router.get(`/:userId`, auth.verify, async (req, res) => {
 //SIGN UP A USER - received and return result or error
 router.post(`/signup`, async (req, res) => {
     try {
-        await userController.signUp(req.body).then(result => res.send(result))
+        await signUp(req.body).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
@@ -42,7 +58,7 @@ router.post(`/signup`, async (req, res) => {
 //CHECK IF EMAIL EXIST - receive and return true or false
 router.post(`/check-email`, async (req, res) => {
     try {
-        await userController.checkEmail(req.body.email).then(result => res.send(result))
+        await checkEmail(req.body.email).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
@@ -51,69 +67,67 @@ router.post(`/check-email`, async (req, res) => {
 //LOGIN - receive and return a token or false or error
 router.post(`/login`, async (req, res) => {
     try {
-        await userController.login(req.body).then(result => res.send(result))
+        await login(req.body).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
 })
 
 //RETRIEVE USER INFORMATION - receive and return user info or error
-router.get(`/profile`, auth.verify, async (req, res) => {
-    const userId = auth.decode(req.headers.authorization).id
+router.get(`/profile`, verify, async (req, res) => {
+    const userId = decode(req.headers.authorization).id
     try {
-        await userController.profile(userId).then(result => res.send(result))
+        await profile(userId).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
 })
 
 //UPDATE USER INFORMATION - receive and return updated user info or error *password should have a dedicated update form*
-router.put(`/update`, auth.verify, async (req, res) => {
-    const userId = auth.decode(req.headers.authorization).id
+router.put(`/update`, verify, async (req, res) => {
+    const userId = decode(req.headers.authorization).id
     try {
-        await userController.update(userId, req.body).then(result => res.send(result))
+        await update(userId, req.body).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
 })
 
 //UPDATE PASSWORD OF A USER - receive and return updated password in hash or error
-router.patch(`/update/password`, auth.verify, async (req, res) => {
-    const userId = auth.decode(req.headers.authorization).id
+router.patch(`/update/password`, verify, async (req, res) => {
+    const userId = decode(req.headers.authorization).id
     try {
-        await userController.updatePassword(userId, req.body).then(result => res.send(result))
+        await updatePassword(userId, req.body).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
 })
 
 //SET ISADMIN TO TRUE - return user info with isAdmin-true or false
-router.patch(`/isAdmin`, auth.verifyIfAdmin, async (req, res) => {
+router.patch(`/isAdmin`, verifyIfAdmin, async (req, res) => {
     try {
-        await userController.adminTrue(req.body).then(result => res.send(result))
+        await adminTrue(req.body).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
 })
 
 //SET ISADMIN TO FALSE - return user info with isAdmin-false or false
-router.patch(`/isUser`, auth.verifyIfAdmin, async (req, res) => {
+router.patch(`/isUser`, verifyIfAdmin, async (req, res) => {
     try {
-        await userController.adminFalse(req.body).then(result => res.send(result))
+        await adminFalse(req.body).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
 })
 
 //DELETE USER - return true or false
-router.delete(`/delete`, auth.verifyIfAdmin, async (req, res) => {
+router.delete(`/delete`, verifyIfAdmin, async (req, res) => {
     try {
-        await userController.deleteUser(req.body).then(result => res.send(result))
+        await deleteUser(req.body).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }
 })
-
-
 
 module.exports = router

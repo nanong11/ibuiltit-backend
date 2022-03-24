@@ -1,5 +1,4 @@
 const OrderProduct = require(`../models/OrderProduct`)
-const Order = require(`../models/Order`)
 const Product = require(`../models/Product`)
 
 // GET ALL ORDER PRODUCTS
