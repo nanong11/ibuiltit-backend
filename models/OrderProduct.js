@@ -1,12 +1,13 @@
+const { ObjectId } = require("bson")
 const mongoose = require(`mongoose`)
 
 const orderProductSchema = mongoose.Schema({
     orderId: {
-        type: String,
+        type: ObjectId,
         required: [true, `OrderId is required.`]
     },
     productId: {
-        type: String,
+        type: ObjectId,
         required: [true, `ProductId is required.`]
     },
     quantity: {
