@@ -58,7 +58,6 @@ router.post(`/signup`, async (req, res) => {
 //CHECK IF EMAIL EXIST - receive and return true or false
 router.post(`/check-email`, async (req, res) => {
     try {
-        res.set('Access-Control-Allow-Origin', 'https://mysterious-ocean-63835.herokuapp.com');
         await checkEmail(req.body.email).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
