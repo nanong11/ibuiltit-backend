@@ -37,6 +37,16 @@ router.get(`/admins`, verifyIfAdmin, async (req, res) => {
     }
 })
 
+//RETRIEVE USER INFORMATION - receive and return user info or error
+router.get(`/profile`, verify, async (req, res) => {
+    const userId = decode(req.headers.authorization).id
+    try {
+        await profile(userId).then(result => res.send(result))
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
 //FIND USER BY ID
 router.get(`/:userId`, verify, async (req, res) => {
     try {
@@ -68,16 +78,6 @@ router.post(`/check-email`, async (req, res) => {
 router.post(`/login`, async (req, res) => {
     try {
         await login(req.body).then(result => res.send(result))
-    } catch (error) {
-        res.status(500).json(error)
-    }
-})
-
-//RETRIEVE USER INFORMATION - receive and return user info or error
-router.get(`/profile`, verify, async (req, res) => {
-    const userId = decode(req.headers.authorization).id
-    try {
-        await profile(userId).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }

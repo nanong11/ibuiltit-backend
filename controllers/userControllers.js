@@ -10,6 +10,10 @@ module.exports.getAllUsers = async() => {
 module.exports.getAllAdmins = async() => {
     return await User.find({isAdmin: true}).then(result => result)}
 
+//RETRIEVE USER INFORMATION - return user info or error
+module.exports.profile= async (userId) => {
+    return await User.findById(userId).then(result => result ? result : error)}
+
 //FIND A USER BY ID
 module.exports.findUser = async (userId) => {
     return await User.findById(userId).then(result => result ? result : error)}
@@ -42,10 +46,6 @@ module.exports.login = async (reqBody) => {
         }
     })
 }
-
-//RETRIEVE USER INFORMATION - return user info or error
-module.exports.profile= async (userID) => {
-    return await User.findById(userID).then(result => result ? result : error)}
 
 //UPDATE USER INFORMATION - return updated user info or error *password should have a dedicated update form*
 module.exports.update = async (userId, reqBody) => {
