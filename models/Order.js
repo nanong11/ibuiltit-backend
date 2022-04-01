@@ -7,7 +7,6 @@ const orderSchema = mongoose.Schema({
     },
     transactionDate: {
         type: Date,
-        default: new Date()
     },
     complete: {
         type: Boolean,

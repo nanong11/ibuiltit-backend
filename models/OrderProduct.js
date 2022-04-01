@@ -20,7 +20,7 @@ const orderProductSchema = mongoose.Schema({
     },
     subTotal: {
         type: Number,
-        required: [true, `Price is required.`],
+        required: [true, `Subtotal is required.`],
         default: 0
     }
 }, {timestamps: true})

@@ -9,12 +9,11 @@ module.exports.getAllOrderProducts = async () => {
 // CREATE A ORDER
 module.exports.createOrderProduct = async (reqBody) => {
     const {orderId, productId, quantity} = reqBody
-    
-    await Product.findById({productId})
+    let price;
+    await Product.findById(productId)
     .then(result => {
         if(result){
-            const price = result.price
-            return price
+            return price = result.price
         }else{
             return error;
         }

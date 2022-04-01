@@ -8,7 +8,6 @@ module.exports.getAllOrders = async () => {
 // CREATE A ORDER
 module.exports.createOrder = async (reqBody) => {
     const {userId, total} = reqBody
-    total = +total.toFixed(2)
     const newOrder = new Order({userId, total})
     return newOrder.save()
     .then(result => result ? result : error)
