@@ -8,8 +8,8 @@ module.exports.getAllProducts = async () => {
 
 // CREATE A PRODUCT
 module.exports.createProduct = async (reqBody) => {
-    const {productName, description, category, price, stock} = reqBody
-    const newProduct = new Product({productName, description, category, price, stock})
+    const {productName, description, features, category, price, stock} = reqBody
+    const newProduct = new Product({productName, description, features, category, price, stock})
     return await newProduct.save()
     .then(result => result ? result : error)}
 
@@ -20,8 +20,8 @@ module.exports.findProduct = async (productId) => {
 
 //UPDATE A PRODUCT
 module.exports.updateProduct = async (productId, reqBody) => {
-    const {productName, description, category, price, stock} = reqBody
-    const productData = {productName, description, category, price, stock}
+    const {productName, description, features, category, price, stock} = reqBody
+    const productData = {productName, description, features, category, price, stock}
     return await Product.findByIdAndUpdate(productId, {$set: productData}, {new:true})
     .then(result => result ? result : error)}
 
