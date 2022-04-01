@@ -10,10 +10,16 @@ const productSchema = mongoose.Schema({
         type: String,
         required: [true, `Description is required.`]
     },
-    features: {
-        type: String,
-        required: [true, `Features is required.`]
-    },
+    features: [
+        {
+            featuresName: {
+                type: String
+            },
+            featuresDescription: {
+                type: String
+            }
+        }
+    ],
     category: {
         type: String,
         required: [true, `Category is required.`]
