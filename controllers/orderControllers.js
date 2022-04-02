@@ -13,6 +13,13 @@ module.exports.createOrder = async (reqBody) => {
     .then(result => result ? result : error)
 }
 
+//UPDATE A ORDER
+module.exports.updateOrder = async (orderId, reqBody) => {
+    const {total} = reqBody
+    const orderData = {total}
+    return await Order.findByIdAndUpdate(orderId, {$set: orderData}, {new:true})
+    .then(result => result ? result : error)}
+
 //FIND AN ORDER
 module.exports.findOrder = async (orderId) => {
     return await Order.findById(orderId)

@@ -7,6 +7,7 @@ const { verify, verifyIfAdmin } = auth
 const {
     getAllOrders,
     createOrder,
+    updateOrder,
     findOrder,
     completeOrder,
     pendingOrder,
@@ -27,6 +28,15 @@ router.get(`/`, verify, async (req, res) => {
 router.post(`/create`, verify, async (req, res) => {
     try {
         await createOrder(req.body).then(result => res.send(result))
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
+// UPDATE A PRODUCT
+router.put(`/:orderId/update`, verify, async (req, res) => {
+    try {
+        await updateOrder(req.params.orderId, req.body).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }

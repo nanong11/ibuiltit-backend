@@ -32,13 +32,34 @@ module.exports.findOrderProduct = async (orderProductId) => {
 
 // ADD QUANTITY OF ORDER PRODUCT
 module.exports.addQuantity = async (orderProductId) => {
-    
-    return await OrderProduct.findByIdAndUpdate({orderProductId}, { $inc: { quantity: 1 }, $set: { subTotal: { $mul: { price : quantity}}} })
+    let subTotal;
+    let quantity;
+    await OrderProduct.findById(orderProductId)
+    .then(result => {
+        if(result){
+            quantity = result.quantity + 1
+            subTotal = quantity * result.price
+        }else{
+            return error
+        }
+    })
+    return await OrderProduct.findByIdAndUpdate(orderProductId, { $set: { subTotal, quantity } })
     .then(result => result ? result : error)}
 
 // DEDUCT QUANTITY OF ORDER PRODUCT
 module.exports.deductQuantity = async (orderProductId) => {
-    return await OrderProduct.findByIdAndUpdate({orderProductId}, { $inc: { quantity: -1 }, $set: { subTotal: { $mul: { price : quantity}}} })
+    let subTotal;
+    let quantity;
+    await OrderProduct.findById(orderProductId)
+    .then(result => {
+        if(result){
+            quantity = result.quantity - 1
+            subTotal = quantity * result.price
+        }else{
+            return error
+        }
+    })
+    return await OrderProduct.findByIdAndUpdate(orderProductId, { $set: { subTotal, quantity } })
     .then(result => result ? result : error)}
 
 //DELETE ORDER
