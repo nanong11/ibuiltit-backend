@@ -59,7 +59,7 @@ router.put(`/:orderProductId/deductQuantity`, verify, async (req, res) => {
 })
 
 // DELETE ORDER PRODUCT
-router.delete(`/: /delete`, verify, async (req, res) => {
+router.delete(`/:orderProductId/delete`, verify, async (req, res) => {
     try {
         await deleteOrderProduct(req.params.orderProductId).then(result => res.send(result))
     } catch (error) {
