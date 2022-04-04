@@ -7,8 +7,8 @@ module.exports.getAllOrders = async () => {
 
 // CREATE A ORDER
 module.exports.createOrder = async (reqBody) => {
-    const {userId, total} = reqBody
-    const newOrder = new Order({userId, total})
+    const {userId} = reqBody
+    const newOrder = new Order({userId})
     return newOrder.save()
     .then(result => result ? result : error)
 }
