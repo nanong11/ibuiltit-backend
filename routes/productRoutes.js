@@ -35,7 +35,7 @@ router.post(`/create`, verifyIfAdmin, async (req, res) => {
 })
 
 // FIND A PRODUCT
-router.post(`/:productId`, verify, async (req, res) => {
+router.post(`/:productId`, async (req, res) => {
     try {
         await findProduct(req.params.productId).then(result => res.send(result))
     } catch (error) {
