@@ -8,6 +8,7 @@ const {
     getAllOrderProducts,
     createOrderProduct,
     findOrderProduct,
+    updateOrderProduct,
     deleteOrderProduct,
     addQuantity,
     deductQuantity
@@ -35,6 +36,15 @@ router.post(`/create`, verify, async (req, res) => {
 router.post(`/:orderProductId`, verifyIfAdmin, async (req, res) => {
     try {
         await findOrderProduct(req.params.orderProductId).then(result => res.send(result))
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
+// UPDATE A ORDER PRODUCT
+router.put(`/:orderProductId/update`, verifyIfAdmin, async (req, res) => {
+    try {
+        await updateOrderProduct(req.params.orderProductId, req.body).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }

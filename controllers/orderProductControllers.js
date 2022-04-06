@@ -30,6 +30,22 @@ module.exports.findOrderProduct = async (orderProductId) => {
     return await OrderProduct.findById(orderProductId)
     .then(result => result ? result : error)}
 
+//UPDATE AN ORDER PRODUCT
+module.exports.updateOrderProduct = async (orderProductId, reqBody) => {
+    const {quantity} = reqBody
+    let subTotal;
+    await OrderProduct.findById(orderProductId)
+    .then(result => {
+        if(result){
+            subTotal = quantity * result.price
+        }else{
+            return error
+        }
+    })
+    const orderProductData = {quantity, subTotal}
+    return await OrderProduct.findByIdAndUpdate(orderProductId, { $set: orderProductData }, {new:true})
+    .then(result => result ? result : error)}
+
 // ADD QUANTITY OF ORDER PRODUCT
 module.exports.addQuantity = async (orderProductId) => {
     let subTotal;
