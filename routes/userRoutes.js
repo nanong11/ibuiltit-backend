@@ -12,7 +12,8 @@ const {
     checkEmail, 
     login, 
     profile, 
-    update, 
+    update,
+    updateByAdmin, 
     updatePassword, 
     adminTrue, 
     adminFalse, 
@@ -88,6 +89,16 @@ router.put(`/update`, verify, async (req, res) => {
     const userId = decode(req.headers.authorization).id
     try {
         await update(userId, req.body).then(result => res.send(result))
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
+//UPDATE USER INFORMATION BY ADMIN ONLY - receive and return updated user info or error *password should have a dedicated update form*
+router.put(`/:userId/updateByAdmin`, verifyIfAdmin, async (req, res) => {
+    console.log(req.body)
+    try {
+        await updateByAdmin(req.params.userId, req.body).then(result => res.send(result))
     } catch (error) {
         res.status(500).json(error)
     }

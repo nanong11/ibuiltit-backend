@@ -51,6 +51,10 @@ module.exports.login = async (reqBody) => {
 module.exports.update = async (userId, reqBody) => {
     return await User.findByIdAndUpdate(userId, {$set: reqBody}, {new:true}).then(result => result ? result : error)}
 
+//UPDATE USER INFORMATION BY ADMIN - return updated user info or error *password should have a dedicated update form*
+module.exports.updateByAdmin = async (userId, reqBody) => {
+    return await User.findByIdAndUpdate(userId, {$set: reqBody}, {new:true}).then(result => result ? result : error)}
+
 //UPDATE PASSWORD OF A USER - return updated password in hash or error
 module.exports.updatePassword = async (userId, reqBody) => {
     return await User.findById(userId).then(result => {
