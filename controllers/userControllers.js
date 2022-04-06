@@ -4,7 +4,7 @@ const User = require(`../models/User`)
 
 //GET ALL USERS - return all the users info
 module.exports.getAllUsers = async() => {
-    return await User.find({isAdmin: false}).then(result => result)}
+    return await User.find().then(result => result)}
 
 //GET ALL ADMINS - return all the users info
 module.exports.getAllAdmins = async() => {

@@ -24,7 +24,18 @@ const userSchema = mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false
+    },
+    lastLoginDate: {
+        type: Date,
+        default: Date.now
     }
 }, {timestamps: true})
 
+/* schema.statics.login = function login(id, callback) {
+    return this.findByIdAndUpdate(id,{'$set' : { 'lastLoginDate' : Date.now()} }, { new : true }, callback);
+};
+schema.set('toJSON', {
+    virtuals: true
+});
+ */
 module.exports = mongoose.model(`User`, userSchema)
