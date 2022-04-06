@@ -20,8 +20,8 @@ module.exports.findProduct = async (productId) => {
 
 //UPDATE A PRODUCT
 module.exports.updateProduct = async (productId, reqBody) => {
-    const {productName, description, features, category, price, stock} = reqBody
-    const productData = {productName, description, features, category, price, stock}
+    const {productName, description, features, category, price, stock, isActive} = reqBody
+    const productData = {productName, description, features, category, price, stock, isActive}
     return await Product.findByIdAndUpdate(productId, {$set: productData}, {new:true})
     .then(result => result ? result : error)}
 
