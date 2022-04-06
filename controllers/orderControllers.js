@@ -15,7 +15,7 @@ module.exports.createOrder = async (reqBody) => {
 
 //UPDATE A ORDER
 module.exports.updateOrder = async (orderId, reqBody) => {
-    const {complet, total} = reqBody
+    const {complete, total} = reqBody
     const orderData = {complete, total}
     return await Order.findByIdAndUpdate(orderId, {$set: orderData}, {new:true})
     .then(result => result ? result : error)}
