@@ -6,6 +6,10 @@ const productSchema = mongoose.Schema({
         required: [true, `Name is required.`],
         unique: [true, `The Game Name must be unique.`]
     },
+    productImg: {
+        type: String,
+        required: [true, `Product Img is required.`],
+    },
     description: {
         type: String,
         required: [true, `Description is required.`]
