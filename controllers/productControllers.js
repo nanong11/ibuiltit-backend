@@ -8,8 +8,8 @@ module.exports.getAllProducts = async () => {
 
 // CREATE A PRODUCT
 module.exports.createProduct = async (reqBody) => {
-    const {productName, description, features, category, price, stock} = reqBody
-    const newProduct = new Product({productName, description, features, category, price, stock})
+    const {productName, productImg, description, features, category, price, stock} = reqBody
+    const newProduct = new Product({productName, productImg, description, features, category, price, stock})
     return await newProduct.save()
     .then(result => result ? result : error)}
 
