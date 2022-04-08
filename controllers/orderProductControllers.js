@@ -6,7 +6,7 @@ module.exports.getAllOrderProducts = async () => {
     return await OrderProduct.find()
     .then(result => result ? result : error)}
 
-// CREATE A ORDER
+// CREATE A ORDER PRODUCT
 module.exports.createOrderProduct = async (reqBody) => {
     const {orderId, productId, quantity} = reqBody
     let price;
@@ -37,7 +37,8 @@ module.exports.updateOrderProduct = async (orderProductId, reqBody) => {
     await OrderProduct.findById(orderProductId)
     .then(result => {
         if(result){
-            subTotal = quantity * result.price
+            rawSubTotal = quantity * result.price
+            subTotal = +(rawSubTotal.toFixed(2))
         }else{
             return error
         }
@@ -54,7 +55,8 @@ module.exports.addQuantity = async (orderProductId) => {
     .then(result => {
         if(result){
             quantity = result.quantity + 1
-            subTotal = quantity * result.price
+            rawSubTotal = quantity * result.price
+            subTotal = +(rawSubTotal.toFixed(2))
         }else{
             return error
         }
@@ -70,7 +72,8 @@ module.exports.deductQuantity = async (orderProductId) => {
     .then(result => {
         if(result){
             quantity = result.quantity - 1
-            subTotal = quantity * result.price
+            rawSubTotal = quantity * result.price
+            subTotal = +(rawSubTotal.toFixed(2))
         }else{
             return error
         }
